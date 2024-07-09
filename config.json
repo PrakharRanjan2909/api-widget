@@ -1,7 +1,9 @@
 {
-  "es_conn": "http://localhost:9200",
-  "es_user": "elastic",
-  "es_pass": "s3cr3t",
-  "es_index_1": "charge_out_costing",
-  "es_index_2": "charge_out_master"
+  "elasticsearch": {
+    "es_conn": "http://localhost:9200",
+    "es_user": "elastic",
+    "es_pass": "s3cr3t",
+    "es_index_1": "charge_out_costing",
+    "es_index_2": "charge_out_master"
+  }
 }

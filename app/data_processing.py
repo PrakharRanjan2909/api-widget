@@ -7,6 +7,9 @@ def process_costing_data(costing_df):
         cost=('ttl_costs', 'sum')
     ).reset_index()
 
+    #  ttl_costs_list to 2 decimal places
+    grouped_costing['ttl_costs_list'] = grouped_costing['ttl_costs_list'].apply(lambda x: [round(val, 2) for val in x])
+
     nested_data = []
     for charge_code, group in grouped_costing.groupby('charge_code'):
         accounts = []
@@ -16,16 +19,17 @@ def process_costing_data(costing_df):
                 'account': row['account'],
                 'friendly_name': row['friendly_name'],
                 'ttl_costs': row['ttl_costs_list'],
-                'ac_total': row['cost']
+                'ac_total': round(row['cost'], 2)  # ac_total has 2 decimal places
             }
             accounts.append(account_data)
             total_cost += row['cost']
-
+        
         nested_data.append({
             'charge_code': charge_code,
-            'cc_total': total_cost,
+            'cc_total': round(total_cost, 2),  #  cc_total has 2 decimal places
             'accounts': accounts,
         })
+    
     return nested_data
 
 def process_master_data(master_df):
@@ -43,16 +47,18 @@ def process_master_data(master_df):
             account_data = {
                 'friendly_name': row['friendly_name'],
                 'countOfServices': row['countOfServices'],
-                'accountCost': row['accountCost']
+                'accountCost': round(row['accountCost'], 2)  #  accountCost has 2 decimal places
             }
             accounts.append(account_data)
             total_count += row['countOfServices']
             total_cost += row['accountCost']
-
+        
         nested_data.append({
             'instanceName': service,
             'instanceCount': total_count,
-            'service_cost': total_cost,
+            'service_cost': round(total_cost, 2),  # service_cost has 2 decimal places
             'account': accounts
         })
+    
     return nested_data
+

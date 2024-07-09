@@ -1,6 +1,13 @@
+import json
 import pandas as pd
 from elasticsearch import Elasticsearch
-from app.config import config
+
+# Load configuration
+def load_config():
+    with open('config.json') as config_file:
+        return json.load(config_file)['elasticsearch']
+
+config = load_config()
 
 def get_es_connection():
     try:
