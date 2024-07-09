@@ -31,11 +31,10 @@ def get_json_result_2():
 def test_api():
     try:
         req_data = request.get_json()
-        # Example: check if a certain field exists in the POST request
+
         if 'test_param' not in req_data:
             return jsonify({'error': 'Missing parameter: test_param'}), 400
         
-        # Example: perform some operation with the request data
         test_param_value = req_data['test_param']
         
         return jsonify({'message': f'API is working with test_param={test_param_value}'}), 200
